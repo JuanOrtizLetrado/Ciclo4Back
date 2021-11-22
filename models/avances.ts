@@ -10,7 +10,7 @@ interface Avances{
    creadoPor: Schema.Types.ObjectId;
 }
 
-const userSchema = new Schema<Avances>({
+const AvanceSchema = new Schema<Avances>({
 
     proyecto:{
         type: Schema.Types.ObjectId,
@@ -36,3 +36,7 @@ const userSchema = new Schema<Avances>({
     }
 
 });
+
+const AvancesModel = model('Avance', AvanceSchema);
+
+export {AvancesModel};
