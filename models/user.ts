@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import {Enum_Rol} from "./enums"
+import {Enum_Rol, Estado_Usuario} from "./enums"
 
 
 
@@ -9,6 +9,7 @@ interface User{
     nombre: string;
     apellido: string;
     rol: Enum_Rol;
+    estado: Estado_Usuario;
 }
 
 
@@ -18,7 +19,15 @@ const userSchema = new Schema<User>({
     correo:{
         type: String,
         required: true,
+        unique:true,
+        validate:{
+            validator: (email)=>{
+                return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+            },
+            message:'FORMATO DE CORREO NO VALIDO',
+        },
     },
+
     identificacion :{
         type: String,
         required: true,
@@ -36,6 +45,11 @@ const userSchema = new Schema<User>({
         type: String,
         required:true,
         enum: Enum_Rol,
+    },
+    estado:{
+        type: String,
+        enum:Estado_Usuario,
+        default: Estado_Usuario.pendiente,
     }
 
 });
